@@ -1,0 +1,26 @@
+# Environment variables - never push this!
+.env
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Pytest cache
+.pytest_cache/
+
+# Virtual environment
+venv/
+.venv/
+
+# IDE files
+.idea/
+.vscode/
+
+# Playwright test results
+test-results/
+playwright-report/
+
+# Screenshots
+screenshots/

@@ -1,0 +1,15 @@
+# IMDb Automation Suite
+Playwright + Python automation project combining
+UI and API testing using IMDb and OMDb API.
+
+## Tech Stack
+- Playwright (Python)
+- Pytest
+- OMDb API
+- Page Object Model
+
+## Setup
+1. Clone repo
+2. pip install -r requirements.txt
+3. Add .env file with OMDB_API_KEY=your_key
+4. pytest tests/
