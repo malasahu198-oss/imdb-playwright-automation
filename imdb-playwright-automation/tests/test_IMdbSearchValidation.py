@@ -1,6 +1,6 @@
 from playwright.sync_api import Playwright, expect
 
-from IMdbValidation.pages.OMdbAPIValidation import OMdbAPIUtils
+from pages.OMdbAPIValidation import OMdbAPIUtils
 
 
 def test_e2e_IMdbsearchvalidation(playwright: Playwright):
