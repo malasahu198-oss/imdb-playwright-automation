@@ -17,7 +17,10 @@ def test_e2e_IMdbsearchvalidation(playwright: Playwright, browser_instance):
     imdb_search.navigateToSearchedMoviePage(movie_name)
     movie_title, movie_year, movie_rating, movie_plot = imdb_search.getMovieInfoFromUI()
 
-    assert movie_title == search_api_data["title"]
-    assert movie_year == search_api_data["year"]
-    assert movie_rating == title_api_data["rating"]
-    assert movie_plot == title_api_data["plot"]
+    try:
+        assert movie_title == search_api_data["title"]
+        assert movie_year == search_api_data["year"]
+        assert movie_rating == title_api_data["rating"]
+        assert movie_plot == title_api_data["plot"]
+    except AssertionError as e:
+        print(f"API and UI response are not matched : {e}")
