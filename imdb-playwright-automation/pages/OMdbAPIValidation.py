@@ -13,11 +13,11 @@ class OMdbAPIUtils:
         self.response_imdb_id = None
         self.response_title = None
 
-    def search_Movie(self, playwright: Playwright):
+    def search_Movie(self, playwright: Playwright, movie_name):
         api_req_context = playwright.request.new_context()
 
         response = api_req_context.get(url="https://www.omdbapi.com/",
-                                       params={"apiKey": apiKey, "s": "The Crack: Inception"})
+                                       params={"apiKey": apiKey, "s": movie_name})
 
         assert response.status == 200, f"expected 200, got {response.status}"
         response_body = response.json()
