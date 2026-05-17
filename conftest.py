@@ -1,3 +1,5 @@
+import os
+
 import pytest
 from playwright.sync_api import Playwright
 
@@ -8,12 +10,15 @@ def pytest_addoption(parser):
 
 @pytest.fixture(scope="module")
 def browser_instance(playwright: Playwright, request):
-    global browser
+
+    #Auto detect Jenkins — no extra flag needed!
+    is_ci = os.getenv("CI") == "true"
+    print(f"Running headless: {is_ci}")
     browser_name = request.config.getoption("--browser_name")
     if browser_name == "chrome":
-        browser = playwright.chromium.launch(headless=False)
+        browser = playwright.chromium.launch(headless=is_ci)
     elif browser_name == "firefox":
-        browser = playwright.firefox.launch(headless=False)
+        browser = playwright.firefox.launch(headless=is_ci)
     context = browser.new_context()
     context.tracing.start(screenshots=True, snapshots=True)
     page = context.new_page()
