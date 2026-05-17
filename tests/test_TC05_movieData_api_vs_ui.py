@@ -24,3 +24,4 @@ def test_e2e_IMdbsearchvalidation(playwright: Playwright, browser_instance, movi
         assert movie_plot == title_api_data["plot"]
     except AssertionError as e:
         print(f"API and UI response are not matched : {e}")
+        raise
