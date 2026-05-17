@@ -16,9 +16,9 @@ def browser_instance(playwright: Playwright, request):
     print(f"Running headless: {is_ci}")
     browser_name = request.config.getoption("--browser_name")
     if browser_name == "chrome":
-        browser = playwright.chromium.launch(headless=is_ci)
+        browser = playwright.chromium.launch(headless=is_ci,channel="chrome")
     elif browser_name == "firefox":
-        browser = playwright.firefox.launch(headless=is_ci)
+        browser = playwright.firefox.launch(headless=is_ci,channel="chrome")
     context = browser.new_context()
     context.tracing.start(screenshots=True, snapshots=True)
     page = context.new_page()
