@@ -1,4 +1,3 @@
-from conftest import browser_instance
 from pages.IMdbUIValidation import IMDbUIValidation
 
 
