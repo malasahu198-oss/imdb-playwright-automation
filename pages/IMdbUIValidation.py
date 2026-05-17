@@ -8,6 +8,7 @@ class IMDbUIValidation:
 
     def navigateToImdb(self):
         expect(self.page).to_have_title(re.compile("IMDb"))
+        print("Successfully navigated to IMDb")
 
     def searchMovie(self, movie_name):
         search_bar = self.page.locator('input[id="suggestion-search"]')
@@ -20,22 +21,25 @@ class IMDbUIValidation:
                 .locator("section[data-testid='find-results-section-title']") \
                 .locator("ul.ipc-metadata-list")
             expect(results_section).to_be_visible()
+            print(f"Successfully searched the movie: {movie_name}.")
         except TimeoutError, AssertionError:
             no_result_found = self.page \
                 .locator('section[data-testid="find-results-section-interest"]') \
                 .locator('div[data-testid="results-section-empty-results-msg"]') \
                 .inner_text()
-            print(no_result_found)
+            print("No result found")
             assert "No results found" in no_result_found
 
     def navigateToSearchedMoviePage(self, movie_name, imdb_id):
         try:
             expect(self.page.get_by_role("link", name=movie_name, exact=True)).to_be_visible()
             self.page.get_by_role("link", name=movie_name, exact=True).first.click()
+            print(f"Successfully navigated to page : {movie_name}.")
         except AssertionError:
             # handle when multiple movie prsent with same name/title
             expect(self.page.locator(f'div.ipc-title a[href*="{imdb_id}"]')).to_be_visible()
             self.page.locator(f'div.ipc-title a[href*="{imdb_id}"]').click()
+            print(f"Successfully navigated to page : {movie_name}.")
 
     def getMovieInfoFromUI(self):
         movie_title = self.page.locator('h1[data-testid="hero__pageTitle"] span').inner_text()
@@ -50,6 +54,7 @@ class IMDbUIValidation:
     def navigateToHomePage(self):
         self.page.locator('(//a[@id="home_img_holder"])[1]').click()
         expect(self.page).to_have_url(re.compile("home"))
+        print("Successfully navigated to home page.")
 
     def top10moviesOfTheWeek(self):
         try:
