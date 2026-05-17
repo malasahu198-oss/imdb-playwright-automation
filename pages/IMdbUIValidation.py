@@ -28,9 +28,14 @@ class IMDbUIValidation:
             print(no_result_found)
             assert "No results found" in no_result_found
 
-    def navigateToSearchedMoviePage(self, movie_name):
-        expect(self.page.get_by_role("link", name=movie_name, exact=True)).to_be_visible()
-        self.page.get_by_role("link", name=movie_name, exact=True).first.click()
+    def navigateToSearchedMoviePage(self, movie_name, imdb_id):
+        try:
+            expect(self.page.get_by_role("link", name=movie_name, exact=True)).to_be_visible()
+            self.page.get_by_role("link", name=movie_name, exact=True).first.click()
+        except AssertionError:
+            # handle when multiple movie prsent with same name/title
+            expect(self.page.locator(f'div.ipc-title a[href*="{imdb_id}"]')).to_be_visible()
+            self.page.locator(f'div.ipc-title a[href*="{imdb_id}"]').click()
 
     def getMovieInfoFromUI(self):
         movie_title = self.page.locator('h1[data-testid="hero__pageTitle"] span').inner_text()

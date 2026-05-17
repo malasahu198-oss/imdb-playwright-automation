@@ -13,6 +13,7 @@ class OMdbAPIUtils:
         self.response_imdb_id = None
         self.response_title = None
 
+
     def search_Movie(self, playwright: Playwright, movie_name):
         api_req_context = playwright.request.new_context()
 
