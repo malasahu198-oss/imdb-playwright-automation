@@ -30,7 +30,7 @@ jobs:
         env:
           OMDB_API_KEY: ${{ secrets.OMDB_API_KEY }}
         run: |
-          pytest tests/ -v -s -n 3\
+          pytest -v -s -n 3 \
           --html=report.html \
           --self-contained-html
 
