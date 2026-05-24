@@ -1,6 +1,7 @@
 import logging
 from playwright.sync_api import Page, expect
-import re
+from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
+
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +29,7 @@ class IMDbGenreFilter:
             logger.info("Coachmark appeared — closing it!")
             coachmark.locator('button[title="Close"]').click()
             logger.info("Coachmark closed!")
-        except TimeoutError:
+        except PlaywrightTimeoutError:
             logger.info("Coachmark did not appear — skipping!")
 
     # UI Actions (No Assertions)
