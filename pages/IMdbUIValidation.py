@@ -1,5 +1,8 @@
+import logging
 import re
 from playwright.sync_api import expect
+
+logger = logging.getLogger(__name__)
 
 
 class IMDbUIValidation:
@@ -8,7 +11,7 @@ class IMDbUIValidation:
 
     def navigateToImdb(self):
         expect(self.page).to_have_title(re.compile("IMDb"))
-        print("Successfully navigated to IMDb")
+        logger.info("Successfully navigated to IMDb")
 
     def searchMovie(self, movie_name):
         search_bar = self.page.locator('input[id="suggestion-search"]')
@@ -22,7 +25,7 @@ class IMDbUIValidation:
                 .locator("ul.ipc-metadata-list")
             expect(results_section).to_be_visible()
             print(f"Successfully searched the movie: {movie_name}.")
-        except TimeoutError, AssertionError:
+        except (TimeoutError, AssertionError):
             no_result_found = self.page \
                 .locator('section[data-testid="find-results-section-interest"]') \
                 .locator('div[data-testid="results-section-empty-results-msg"]') \

@@ -16,12 +16,12 @@ def browser_instance(playwright: Playwright, request):
     print(f"Running headless: {is_ci}")
     browser_name = request.config.getoption("--browser_name")
     if browser_name == "chrome":
-        browser = playwright.chromium.launch(headless=is_ci, channel="chrome")
+        browser = playwright.chromium.launch(headless=is_ci, channel="chrome", args=["--start-maximized"])
     elif browser_name == "firefox":
-        browser = playwright.firefox.launch(headless=is_ci, channel="chrome")
+        browser = playwright.firefox.launch(headless=is_ci, channel="chrome", args=["--start-maximized"])
     context = browser.new_context(
         user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        viewport={"width": 1920, "height": 1080}
+        no_viewport=True
     )
     context.tracing.start(screenshots=True, snapshots=True)
     page = context.new_page()
@@ -32,6 +32,11 @@ def browser_instance(playwright: Playwright, request):
     browser.close()
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def movie_mame(request):
     return request.config.getoption("--movie_name")
+
+
+def pytest_configure(config):
+    config.option.log_cli = True
+    config.option.log_cli_level = "INFO"
